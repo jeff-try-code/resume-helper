@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 
+import FormTextField from "./forms/FormTextField.js";
+
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +45,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Form = (props) => {
+  const [newProject, setNewProject] = useState({
+    tags: [],
+    name: "",
+    overview: "",
+    bulletPoints: ["", "", ""],
+  });
+
+  function handleChange(e) {
+    const value = e.target.value;
+    const name = e.target.name.split(' ');
+    if (name[0] === "bulletPoints") {
+      const newBulletPoints = newProject.bulletPoints.slice()
+      newBulletPoints[name[1]] = value
+      setNewProject({
+        ...newProject,
+        [name[0]]:newBulletPoints
+      })
+    } else {
+      setNewProject({
+        ...newProject,
+        [name[0]]: value,
+      });
+    }
+  }
+
   const [tags, setTags] = useState([]);
   const [projects, setProjects] = useState([]);
   const [projectName, setProjectName] = useState("");
@@ -217,76 +244,69 @@ const Form = (props) => {
               );
             })}
           </Grid>
-          <TextField
-            onChange={handleChangeProjectName}
-            label="Project name"
-            variant="outlined"
-            className={classes.textField}
-            helperText="Write down project name"
-            margin="dense"
-            InputLabelProps={{
-              shrink: true,
-            }}
+          <FormTextField
+            label={"Project Name"}
+            handleChange={handleChange}
+            name={"name"}
+            value={newProject.name}
           />
-          <TextField
-            onChange={handleChangeProjectOverview}
-            label="Project overview"
-            variant="outlined"
-            className={classes.textField}
-            helperText="Write down few wrods to Describe the project"
-            margin="dense"
-            multiline
-            InputLabelProps={{
-              shrink: true,
-            }}
+          <FormTextField
+            label={"Project Overview"}
+            handleChange={handleChange}
+            name={"overview"}
+            value={newProject.overview}
           />
-          <TextField
-            multiline
-            onChange={handleChangeProjectBulletPoint1}
-            label="Bullet point 1"
-            variant="outlined"
-            className={classes.textField}
-            helperText="Write down bullet point for the project"
-            margin="dense"
-            InputLabelProps={{
-              shrink: true,
-            }}
+          {newProject.bulletPoints.map((value, index) => {
+            return (
+              <>
+                <FormTextField
+                  label={`Bullet Point ${index + 1}`}
+                  handleChange={handleChange}
+                  name={`bulletPoints ${index}`}
+                  value={value}
+                />
+              </>
+            );
+          })}
+          <FormTextField
+            label={"Bullet point"}
+            handleChange={handleChangeProjectBulletPoint1}
           />
-          <TextField
-            multiline
-            onChange={handleChangeProjectBulletPoint2}
-            label="Bullet point 2"
-            variant="outlined"
-            className={classes.textField}
-            helperText="Write down bullet point for the project"
-            margin="dense"
-            InputLabelProps={{
-              shrink: true,
-            }}
+          <FormTextField
+            label={"Bullet point"}
+            handleChange={handleChangeProjectBulletPoint2}
           />
-          <TextField
-            multiline
-            onChange={handleChangeProjectBulletPoint3}
-            label="Bullet point 3"
-            variant="outlined"
-            className={classes.textField}
-            helperText="Write down bullet point for the project"
-            margin="dense"
-            InputLabelProps={{
-              shrink: true,
-            }}
+          <FormTextField
+            label={"Bullet point"}
+            handleChange={handleChangeProjectBulletPoint3}
           />
-          <TextField
-            multiline
-            onChange={handleChangeProjectBulletPoint4}
-            label="Bullet point 4"
-            variant="outlined"
-            className={classes.textField}
-            helperText="Write down bullet point for the project"
-            margin="dense"
-            InputLabelProps={{
-              shrink: true,
-            }}
+          <FormTextField
+            label={"Bullet point"}
+            handleChange={handleChangeProjectBulletPoint4}
+          />
+          <FormTextField
+            label={"Project name"}
+            handleChange={handleChangeProjectName}
+          />
+          <FormTextField
+            label={"Project overview"}
+            handleChange={handleChangeProjectOverview}
+          />
+          <FormTextField
+            label={"Bullet point"}
+            handleChange={handleChangeProjectBulletPoint1}
+          />
+          <FormTextField
+            label={"Bullet point"}
+            handleChange={handleChangeProjectBulletPoint2}
+          />
+          <FormTextField
+            label={"Bullet point"}
+            handleChange={handleChangeProjectBulletPoint3}
+          />
+          <FormTextField
+            label={"Bullet point"}
+            handleChange={handleChangeProjectBulletPoint4}
           />
           <Button
             variant="contained"
@@ -296,6 +316,11 @@ const Form = (props) => {
             Save Project
           </Button>
         </Grid>
+      </Paper>
+      <Paper className={classes.paper}>
+        <>
+          <pre>{JSON.stringify(newProject, null, 2)}</pre>
+        </>
       </Paper>
       <Paper className={classes.paper}>
         {projects.map((pro) => {

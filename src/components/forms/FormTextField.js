@@ -1,28 +1,28 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
+import { TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2),
     width: "100%",
   },
-  input: {
-    shrink: true,
-  }
 }));
 
-const FormTextField = ({label, handleChange}) => {
-  const classes = useStyles()
+const FormTextField = ({ label, handleChange, name, value }) => {
+  const classes = useStyles();
   return (
     <TextField
-      onChange={handleChange}
-      label="label"
       variant="outlined"
-      className={classes.root}
       margin="dense"
+      name={name}
+      value={value}
+      onChange={handleChange}
+      label={label}
+      className={classes.root}
+      required
       InputLabelProps={{
-        className: classes.input,
+        shrink: true,
       }}
     />
   );
