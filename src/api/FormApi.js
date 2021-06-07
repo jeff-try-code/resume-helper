@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const getTags = (set) => {
   return axios.get("http://localhost:3001/tags").then((res) => {
     set(res.data);
@@ -19,10 +18,10 @@ const addTagReq = (newTag) => {
 };
 const addProject = (newProject) => {
   return axios
-  .post("http://localhost:3001/projects", newProject)
-  .then((res) => {
-    console.log("done");
-  });
+    .post("http://localhost:3001/projects", newProject)
+    .then((res) => {
+      console.log("done");
+    });
 };
 
 const deleteTagReq = (tag) => {
@@ -30,5 +29,4 @@ const deleteTagReq = (tag) => {
     console.log("done");
   });
 };
-export{ getTags, getProjects, addTagReq, addProject, deleteTagReq}
-
+export { getTags, getProjects, addTagReq, addProject, deleteTagReq };

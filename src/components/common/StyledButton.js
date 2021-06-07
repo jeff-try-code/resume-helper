@@ -5,8 +5,7 @@ import { Button } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     borderRadius: "25px",
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    margin: theme.spacing(1),
   },
 }));
 

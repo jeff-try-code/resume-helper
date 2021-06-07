@@ -1,27 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
 
-
-import StyledChip from "./common/StyledChip.js";
-import Form from "./Form.js"
-import {
-  getTags,
-  getProjects,
-} from "../api/FormApi.js";
+import Form from "./Form.js";
+import ChipGrid from "./common/ChipGrid.js";
+import { getTags, getProjects } from "../api/FormApi.js";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     margin: theme.spacing(2),
     padding: theme.spacing(2),
-    width: "100%",
-  },
-  chipGrid: {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
     width: "100%",
   },
   chipPaper: {
@@ -49,28 +37,13 @@ const Projects = (props) => {
       setShow(e.target.textContent);
     }
   };
-
-
-
   const classes = useStyles();
   return (
     <>
       <Paper className={classes.chipPaper}>
-        <Grid className={classes.chipGrid}>
-          {tags.map((data) => {
-            return (
-              <li key={data}>
-                <StyledChip
-                  label={data}
-                  onClick={showTag2}
-                  color={show === data ? "primary" : "default"}
-                />
-              </li>
-            );
-          })}
-        </Grid>
+        <ChipGrid tags={tags} onClick={showTag2} array={[show]} />
       </Paper>
-      <Form setProjects={setProjects} setTags={setTags} tags={tags}/>
+      <Form setProjects={setProjects} setTags={setTags} tags={tags} />
       <Paper className={classes.paper}>
         {projects.map((pro) => {
           if (show === "all" || pro.tags.includes(show)) {
