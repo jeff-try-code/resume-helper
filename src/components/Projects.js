@@ -2,19 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Form from "./Form.js";
+import Form from "./forms/Form.js";
 import ChipGrid from "./common/ChipGrid.js";
 import { getTags, getProjects } from "../api/FormApi.js";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    width: "100%",
-  },
-  chipPaper: {
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     width: "100%",
   },
 }));
@@ -40,10 +37,13 @@ const Projects = (props) => {
   const classes = useStyles();
   return (
     <>
-      <Paper className={classes.chipPaper}>
+      <Paper className={classes.paper}>
         <ChipGrid tags={tags} onClick={showTag2} array={[show]} />
       </Paper>
+      <Paper className={classes.paper}>
+
       <Form setProjects={setProjects} setTags={setTags} tags={tags} />
+      </Paper>
       <Paper className={classes.paper}>
         {projects.map((pro) => {
           if (show === "all" || pro.tags.includes(show)) {
