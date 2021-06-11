@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Paper } from "@material-ui/core";
+import { Paper, Grid, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Form from "./forms/Form.js";
 import ChipGrid from "./common/ChipGrid.js";
+import StyledButton from "./common/StyledButton.js";
 import { getTags, getProjects } from "../api/FormApi.js";
+import CreateIcon from "@material-ui/icons/Create";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -12,41 +14,58 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
     width: "100%",
+    elevation: "3",
   },
 }));
 
 const Projects = (props) => {
   const [projects, setProjects] = useState([]);
-  const [show, setShow] = useState("all");
+  const [showTag, setShowTag] = useState("all");
   const [tags, setTags] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     getTags(setTags);
     getProjects(setProjects);
   }, []);
 
-  const showTag2 = (e) => {
-    console.log(e.target.textContent);
-    if (show === e.target.textContent) {
-      setShow("all");
+  const handleShowForm = (e) => {
+    setShowForm(!showForm);
+  };
+
+  const handleShowTag = (e) => {
+    if (showTag === e.target.textContent) {
+      setShowTag("all");
     } else {
-      setShow(e.target.textContent);
+      setShowTag(e.target.textContent);
     }
   };
   const classes = useStyles();
   return (
     <>
-      <Paper className={classes.paper}>
-        <ChipGrid tags={tags} onClick={showTag2} array={[show]} />
+      <Paper elevation={3} className={classes.paper}>
+        <ChipGrid tags={tags} onClick={handleShowTag} array={[showTag]} />
+        <Grid container justify="flex-end">
+          <IconButton
+            color="primary"
+            aria-label="add project"
+            onClick={handleShowForm}
+          >
+            <CreateIcon />
+          </IconButton>
+          {showForm && (
+            <Paper elevation={3} className={classes.paper}>
+              <Form setProjects={setProjects} setTags={setTags} tags={tags} />
+            </Paper>
+          )}
+        </Grid>
       </Paper>
-      <Paper className={classes.paper}>
-
-      <Form setProjects={setProjects} setTags={setTags} tags={tags} />
-      </Paper>
-      <Paper className={classes.paper}>
+      <Paper elevation={3} className={classes.paper}>
         {projects.map((pro) => {
-          if (show === "all" || pro.tags.includes(show)) {
+          if (showTag === "all" || pro.tags.includes(showTag)) {
             return (
               <>
                 <pre>{JSON.stringify(pro, null, 2)}</pre>
