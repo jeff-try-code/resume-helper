@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Paper, Grid, IconButton } from "@material-ui/core";
+import { Paper, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import CreateIcon from "@material-ui/icons/Create";
 
 import Form from "./forms/Form.js";
 import ChipGrid from "./common/ChipGrid.js";
-import StyledButton from "./common/StyledButton.js";
+import StyledIconButton from "./common/StyledIconButton.js";
+import DisplayProjects from "./displayProjects/DisplayProjects.js";
+
 import { getTags, getProjects } from "../api/FormApi.js";
-import CreateIcon from "@material-ui/icons/Create";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,33 +51,25 @@ const Projects = (props) => {
       <Paper elevation={3} className={classes.paper}>
         <ChipGrid tags={tags} onClick={handleShowTag} array={[showTag]} />
         <Grid container justify="flex-end">
-          <IconButton
-            color="primary"
-            aria-label="add project"
-            onClick={handleShowForm}
-          >
-            <CreateIcon />
-          </IconButton>
+          <StyledIconButton
+            label={"add project"}
+            icon={<CreateIcon />}
+            handleClick={handleShowForm}
+          />
           {showForm && (
             <Paper elevation={3} className={classes.paper}>
-              <Form setProjects={setProjects} setTags={setTags} tags={tags} />
+              <Form
+                setProjects={setProjects}
+                setTags={setTags}
+                tags={tags}
+                handleShowForm={handleShowForm}
+              />
             </Paper>
           )}
         </Grid>
       </Paper>
       <Paper elevation={3} className={classes.paper}>
-        {projects.map((pro) => {
-          if (showTag === "all" || pro.tags.includes(showTag)) {
-            return (
-              <>
-                <pre>{JSON.stringify(pro, null, 2)}</pre>
-                <p>________________________________________</p>
-              </>
-            );
-          } else {
-            return <></>;
-          }
-        })}
+        <DisplayProjects projects={projects} showTag={showTag}/>
       </Paper>
     </>
   );

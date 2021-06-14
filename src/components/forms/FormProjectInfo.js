@@ -3,7 +3,6 @@ import FormTextField from "./FormTextField.js";
 import FormBulletPoints from "./FormBulletPoints.js";
 
 const FormProjectInfo = ({ newProject, setNewProject }) => {
-
   const handleChange = (e) => {
     const name = e.target.name.split(" ");
     if (name[0] === "bulletPoints") {

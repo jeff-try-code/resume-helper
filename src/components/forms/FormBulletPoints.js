@@ -1,9 +1,9 @@
 import React from "react";
+import { ButtonGroup, Button } from "@material-ui/core";
+
 import FormTextField from "./FormTextField.js";
-import StyledButton from "../common/StyledButton.js";
 
 const FormBulletPoints = ({ newProject, setNewProject, handleChange }) => {
-
   const handleAddBulletPoint = (e) => {
     setNewProject({
       ...newProject,
@@ -33,14 +33,14 @@ const FormBulletPoints = ({ newProject, setNewProject, handleChange }) => {
           />
         );
       })}
-      <StyledButton
-        text={"Add Bullet Point"}
-        handleClick={handleAddBulletPoint}
-      />
-      <StyledButton
-        text={"Delete Bullet Point"}
-        handleClick={handleDeleteBulletPoint}
-      />
+        <ButtonGroup
+          variant="contained"
+          color="primary"
+          style={{paddingTop:"10px"}}
+        >
+          <Button onClick={handleAddBulletPoint}>Add Bullet Point</Button>
+          <Button onClick={handleDeleteBulletPoint}>Delete Bullet Point</Button>
+        </ButtonGroup>
     </>
   );
 };

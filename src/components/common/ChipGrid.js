@@ -14,8 +14,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChipGrid = ({ tags, label, onClick, onDelete, array }) => {
+const ChipGrid = ({ tags, onClick, onDelete, array }) => {
   const classes = useStyles();
+  array = array || "default"
   return (
     <Grid className={classes.chipGrid}>
       {tags.map((data) => {

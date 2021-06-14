@@ -1,17 +1,9 @@
 import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 
 import ChipGrid from "../common/ChipGrid.js";
 import FormAddChip from "./FormAddChip.js";
 import { getTags, deleteTagReq } from "../../api/FormApi.js";
 
-const useStyles = makeStyles((theme) => ({
-  grid: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}));
 
 const FormChips = ({ newProject, setNewProject, setTags, tags }) => {
   const [newProjectTags, setNewProjectTags] = useState([]);
@@ -38,10 +30,8 @@ const FormChips = ({ newProject, setNewProject, setTags, tags }) => {
       });
     }
   };
-
-  const classes = useStyles();
   return (
-    <Grid item container className={classes.grid}>
+    <>
       <ChipGrid
         tags={tags}
         onClick={selectTag}
@@ -49,7 +39,7 @@ const FormChips = ({ newProject, setNewProject, setTags, tags }) => {
         array={newProject.tags}
       />
       <FormAddChip setTags={setTags} />
-    </Grid>
+    </>
   );
 };
 
