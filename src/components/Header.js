@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Grid, Typography, Button } from "@material-ui/core";
+import { AppBar, Grid, Typography } from "@material-ui/core";
 
 const Header = () => {
   return (
@@ -7,12 +7,10 @@ const Header = () => {
       <Grid
         container
         direction="row"
-        justify="space-between"
+        justify="center"
         alignItems="baseline"
       >
-        <Grid item> </Grid>
         <Typography variant="h4">Resumeee</Typography>
-        <Button color="inherit">Login</Button>
       </Grid>
     </AppBar>
   );
